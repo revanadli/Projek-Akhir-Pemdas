@@ -1,0 +1,270 @@
+import processing.core.PApplet;
+
+public class MySketch3 extends PApplet {
+
+    Car[] cars;
+    Mobil[] mobils;
+    boolean isRaining = true; // Variabel untuk menandai kondisi hujan
+
+    public static void main(String[] args) {
+        PApplet.runSketch(new String[]{"City Theme"}, new MySketch3());
+    }
+
+    @Override
+    public void settings() {
+        size(800, 600);
+        smooth();
+    }
+
+    @Override
+    public void setup() {
+        cars = new Car[5];
+
+        for (int i = 0; i < cars.length; i++) {
+            float startX = random(width);
+            float startY = random(320, 420);
+            float speed = random(1, 3);
+
+            cars[i] = new Car(startX, startY, speed);
+        }
+        mobils = new Mobil [5];
+
+        for(int i = 0; i < mobils.length;i++){
+            float startX = random(width);
+            float startY = random(470,580);
+            float speed = random(1,3);
+
+            mobils[i] = new Mobil(startX,startY,speed);
+        }
+    }
+
+    @Override
+    public void draw() {
+        background(0); // Ubah latar belakang menjadi hitam
+
+        drawSky();
+
+        // Draw jalan
+        fill(100);
+        noStroke();
+        rect(0, height / 2, width, height / 2);
+
+        drawBuildings();
+        drawRoad();
+        drawRain();
+        drawTrees();
+    }
+
+    void drawRoad() {
+        fill(100);
+        noStroke();
+
+        // Jalan
+        rect(0, height / 2, width, height / 4); // Jalan
+
+        // Trotoar
+        fill(180); // Warna abu-abu untuk trotoar
+        rect(0, height / 2 - 20, width, 20); // Trotoar di sisi atas jalan
+        rect(0, height * 3 / 4, width, 20); // Trotoar di sisi bawah jalan
+
+        // Mobil
+        for (int i = 0; i < cars.length; i++) {
+            cars[i].update();
+            cars[i].display();
+        }
+        for (int i = 0; i < mobils.length;i++){
+            mobils[i].update();
+            mobils[i].display();
+        }
+    }
+
+    void drawSky() {
+        fill(0);
+        noStroke();
+        rect(0, 0, width, height / 2);
+    }
+
+    void drawBuildings() {
+        // Rumah 1
+        fill(255, 200, 150); // Warna rumah ke-1
+        rect(50, height / 2 - 100, 100, 100); // Badan rumah 1
+
+        // Atap rumah 1
+        fill(150, 75, 0); // Warna atap rumah ke-1
+        triangle(50, height / 2 - 100, 150, height / 2 - 100, 100, height / 2 - 150); // Atap rumah 1
+
+        // Pintu rumah 1
+        fill(100, 50, 0); // Warna pintu rumah ke-1
+        rect(75, height / 2 - 50, 20, 50); // Pintu rumah 1
+
+        // Jendela rumah 1
+        fill(200, 255, 255); // Warna jendela rumah ke-1
+        rect(110, height / 2 - 90, 20, 20); // Jendela 1 rumah 1
+        rect(60, height / 2 - 90, 20, 20); // Jendela 2 rumah 1
+
+        // Rumah 2
+        fill(200, 100, 100); // Warna rumah ke-2
+        rect(250, height / 2 - 120, 120, 120); // Badan rumah 2
+
+        // Atap rumah 2
+        fill(180, 90, 90); // Warna atap rumah ke-2
+        triangle(250, height / 2 - 120, 370, height / 2 - 120, 310, height / 2 - 170); // Atap rumah 2
+
+        // Pintu rumah 2
+        fill(120, 60, 60); // Warna pintu rumah ke-2
+        rect(290, height / 2 - 50, 20, 50); // Pintu rumah 2
+
+        // Jendela rumah 2
+        fill(255); // Warna jendela rumah ke-2
+        rect(270, height / 2 - 100, 20, 20); // Jendela 1 rumah 2
+        rect(330, height / 2 - 100, 20, 20); // Jendela 2 rumah 2
+
+        // Rumah 3
+        fill(100, 200, 100); // Warna rumah ke-3
+        rect(500, height / 2 - 90, 90, 90); // Badan rumah 3
+
+        // Atap rumah 3
+        fill(80, 160, 80); // Warna atap rumah ke-3
+        triangle(500, height / 2 - 90, 590, height / 2 - 90, 545, height / 2 - 140); // Atap rumah 3
+
+        // Pintu rumah 3
+        fill(60, 120, 60); // Warna pintu rumah ke-3
+        rect(530, height / 2 - 40, 20, 40); // Pintu rumah 3
+
+        // Jendela rumah 3
+        fill(255); // Warna jendela rumah ke-3
+        rect(510, height / 2 - 70, 20, 20); // Jendela 1 rumah 3
+        rect(550, height / 2 - 70, 20, 20); // Jendela 2 rumah 3
+
+        // Rumah 4
+        fill(150, 150, 200); // Warna rumah ke-4
+        rect(700, height / 2 - 110, 110, 110); // Badan rumah 4
+
+        // Atap rumah 4
+        fill(120, 120, 160); // Warna atap rumah ke-4
+        triangle(700, height / 2 - 110, 810, height / 2 - 110, 755, height / 2 - 160); // Atap rumah 4
+
+        // Pintu rumah 4
+        fill(90, 90, 120); // Warna pintu rumah ke-4
+        rect(735, height / 2 - 40, 20, 40); // Pintu rumah 4
+
+        // Jendela rumah 4
+        fill(255); // Warna jendela rumah ke-4
+        rect(715, height / 2 - 80, 20, 20); // Jendela 1 rumah 4
+        rect(755, height / 2 - 80, 20, 20); // Jendela 2 rumah 4
+    }
+
+    void drawTrees() {
+        // Pohon 1
+        fill(139, 69, 19); // Warna batang pohon
+        rect(200, height / 2 + 50, 20, 100); // Batang pohon
+        fill(0, 128, 0); // Warna daun pohon
+        ellipse(210, height / 2 + 25, 60, 60); // Daun pohon
+
+        // Pohon 2
+        fill(139, 69, 19); // Warna batang pohon
+        rect(400, height / 2 + 50, 20, 100); // Batang pohon
+        fill(0, 128, 0); // Warna daun pohon
+        ellipse(410, height / 2 + 25, 60, 60); // Daun pohon
+
+        // Pohon 3
+        fill(139, 69, 19); // Warna batang pohon
+        rect(600, height / 2 + 50, 20, 100); // Batang pohon
+        fill(0, 128, 0); // Warna daun pohon
+        ellipse(610, height / 2 + 25, 60, 60); // Daun pohon
+
+        // Pohon 4
+        fill(139, 69, 19); // Warna batang pohon
+        rect(800, height / 2 + 50, 20, 100); // Batang pohon
+        fill(0, 128, 0); // Warna daun pohon
+        ellipse(810, height / 2 + 25, 60, 60); // Daun pohon
+    }
+
+
+    void drawRain() {
+        if (isRaining) {
+            stroke(51, 255, 255);
+            for (int i = 0; i < 100; i++) {
+                float x = random(width);
+                float y = random(height / 2);
+                line(x, y, x, y + 5);
+            }
+        }
+    }
+
+    class Car {
+        float x, y;
+        float speed;
+
+        Car(float x, float y, float speed) {
+            this.x = x;
+            this.y = y;
+            this.speed = speed;
+        }
+
+        void update() {
+            x += speed;
+
+            if (x > width + 50) {
+                x = -50;
+                y = random(300, 450);
+            }
+        }
+
+
+        void display() {
+            stroke(0);
+            fill(255); // Warna putih untuk mobil
+            rect(x, y - 20, 60, 20);
+            fill(192); // Warna abu-abu untuk atap mobil
+            rect(x + 10, y - 30, 40, 10);
+            fill(0); // Warna hitam untuk roda mobil
+            ellipse(x + 15, y, 15, 15);
+            ellipse(x + 45, y, 15, 15);
+        }
+    }
+    class Mobil {
+        float x, y;
+        float speed;
+
+        Mobil(float x, float y, float speed) {
+            this.x = x;
+            this.y = y;
+            this.speed = speed;
+        }
+
+        void update() {
+            x -= speed;
+
+            if (x < 0 - 50) {
+                x = width;
+                y = random(470, 580);
+            }
+        }
+
+
+        void display() {
+            stroke(0);
+            fill(255); // Warna putih untuk mobil
+            rect(x, y - 20, 60, 20);
+            fill(192); // Warna abu-abu untuk atap mobil
+            rect(x + 10, y - 30, 40, 10);
+            fill(0); // Warna hitam untuk roda mobil
+            ellipse(x + 15, y, 15, 15);
+            ellipse(x + 45, y, 15, 15);
+        }
+    }
+
+    void drawWindows(float x, float y, float buildingWidth, float buildingHeight) {
+        float windowWidth = 20;
+        float windowHeight = 30;
+        float gap = 10;
+
+        fill(255);
+        for (float i = x + gap; i < x + buildingWidth - windowWidth; i += windowWidth + gap) {
+            for (float j = y + gap; j < y + buildingHeight - windowHeight; j += windowHeight + gap) {
+                rect(i, j, windowWidth, windowHeight);
+            }
+        }
+    }
+}
